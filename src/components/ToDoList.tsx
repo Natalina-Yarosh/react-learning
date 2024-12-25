@@ -2,6 +2,7 @@ import { FC } from "react"
 import { ToDoListItem } from "./ToDoListItem"
 import { useToDoList } from "../hooks/useToDoList"
 import { TodoListCreateStatuses } from "../types/todolist-statuses"
+import { Text } from "./reusable/Text"
 
 
 type ToDoListProps = {
@@ -13,10 +14,12 @@ export const ToDoList: FC<ToDoListProps> = ({ bgColor }) => {
 
     const { 
         inputValue, 
-        setInputValue, 
+        setInputValue,
+        toggleEditMode,
         addTodoItemByEnter, 
         statuses, 
         toggleCompleted,
+        saveEditValues,
         toDoItems, 
         addToDoItem, 
         deleteTodoItem 
@@ -43,14 +46,16 @@ export const ToDoList: FC<ToDoListProps> = ({ bgColor }) => {
                     
                 </div>
                 <ul className="list" >
-                    {toDoItems.map((item) => (
+                    {toDoItems.length ? toDoItems.map((item) => (
                         <ToDoListItem
+                            saveEditValues={saveEditValues}
+                            toggleEditMode={toggleEditMode}
                             onTodoListToggleCompleted={toggleCompleted} 
                             onTodoListDelete={deleteTodoItem} 
                             key={item.id} 
                             item={item}
                         />
-                    ))}
+                    )): <Text tag="h2">No notes yet</Text>}
                 </ul>
             </div> 
         </div>

@@ -26,6 +26,7 @@
 .input {
   width: 100%;
   padding: 10px;
+  border: 1px solid #222;
   color: #222;
   border-radius: 5px;
   font-size: 16px;
@@ -68,6 +69,11 @@ button {
   opacity: 0.5;
 }
 
+.edit {
+  cursor: pointer;
+  transform: rotate(45deg);
+}
+
 .list__item {
   display: flex;
   justify-content: space-between;
@@ -91,7 +97,7 @@ button {
 }
 
 .completed {
-  text-decoration: line-through;
+  text-decoration: line-through !important;
   opacity: 0.5;
   
 }
