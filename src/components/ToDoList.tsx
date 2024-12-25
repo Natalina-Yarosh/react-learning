@@ -1,6 +1,7 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { ToDoListItem } from "./ToDoListItem"
 import { useToDoList } from "../hooks/useToDoList"
+import { TodoListCreateStatuses } from "../types/todolist-statuses"
 
 
 type ToDoListProps = {
@@ -9,19 +10,25 @@ type ToDoListProps = {
 
 export const ToDoList: FC<ToDoListProps> = ({ bgColor }) => {
 
-    const { inputValue, setInputValue, toDoItems, addToDoItem } = useToDoList()
+
+    const { inputValue, setInputValue, statuses, toDoItems, addToDoItem, deleteTodoItem } = useToDoList()
     
     return (
         <div className="wrapper">
             <div className="container">
+
                 <div className="box">
                     <input value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="input" type="text"/>
-                    <button disabled={inputValue === ''} onClick={addToDoItem} className="btn">create</button>
+                    <button disabled={inputValue === ''} onClick={addToDoItem} className="btn">{statuses === TodoListCreateStatuses.LOADING ? 'Adding...' : 'Create'}</button>
                     
                 </div>
                 <ul style={{ backgroundColor: bgColor }} className="list" >
                     {toDoItems.map((item) => (
-                        <ToDoListItem key={item.id} item={item}/>
+                        <ToDoListItem 
+                            onTodoListDelete={deleteTodoItem} 
+                            key={item.id} 
+                            item={item}
+                        />
                     ))}
                 </ul>
             </div> 
