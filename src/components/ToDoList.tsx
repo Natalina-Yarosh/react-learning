@@ -1,5 +1,6 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import { ToDoListItem } from "./ToDoListItem"
+import { useToDoList } from "../hooks/useToDoList"
 
 
 type ToDoListProps = {
@@ -7,12 +8,9 @@ type ToDoListProps = {
 }
 
 export const ToDoList: FC<ToDoListProps> = ({ bgColor }) => {
-    const [inputValue, setInputValue] = useState<string>('');
-    const [toDoItems, setToDoItems] = useState<string[]>([]);
-    const addToDoItem =() => {
-        setToDoItems([...toDoItems, inputValue])
-        setInputValue('')
-    }
+
+    const { inputValue, setInputValue, toDoItems, addToDoItem } = useToDoList()
+    
     return (
         <div className="wrapper">
             <div className="container">
@@ -22,8 +20,8 @@ export const ToDoList: FC<ToDoListProps> = ({ bgColor }) => {
                     
                 </div>
                 <ul style={{ backgroundColor: bgColor }} className="list" >
-                    {toDoItems.map((item, index) => (
-                        <ToDoListItem key={index} text={item} />
+                    {toDoItems.map((item) => (
+                        <ToDoListItem key={item.id} item={item}/>
                     ))}
                 </ul>
             </div> 
