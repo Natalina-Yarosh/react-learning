@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import { ToDoListItem } from "./ToDoListItem"
 import { useToDoList } from "../hooks/useToDoList"
 import { TodoListCreateStatuses } from "../types/todolist-statuses"
@@ -11,20 +11,41 @@ type ToDoListProps = {
 export const ToDoList: FC<ToDoListProps> = ({ bgColor }) => {
 
 
-    const { inputValue, setInputValue, statuses, toDoItems, addToDoItem, deleteTodoItem } = useToDoList()
+    const { 
+        inputValue, 
+        setInputValue, 
+        addTodoItemByEnter, 
+        statuses, 
+        toggleCompleted,
+        toDoItems, 
+        addToDoItem, 
+        deleteTodoItem 
+    } = useToDoList()
     
     return (
-        <div className="wrapper">
+        <div  style={{ backgroundColor: bgColor }} className="wrapper">
             <div className="container">
 
                 <div className="box">
-                    <input value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="input" type="text"/>
-                    <button disabled={inputValue === ''} onClick={addToDoItem} className="btn">{statuses === TodoListCreateStatuses.LOADING ? 'Adding...' : 'Create'}</button>
+                    <input 
+                        value={inputValue} 
+                        onChange={(e) => setInputValue(e.target.value)} 
+                        onKeyDown={addTodoItemByEnter} 
+                        className="input" 
+                        type="text"
+                    />
+                    <button 
+                        disabled={inputValue === '' || statuses === TodoListCreateStatuses.LOADING} 
+                        onClick={addToDoItem} 
+                        className="btn">
+                        {statuses === TodoListCreateStatuses.LOADING ? 'Adding...' : 'Create'}
+                    </button>
                     
                 </div>
-                <ul style={{ backgroundColor: bgColor }} className="list" >
+                <ul className="list" >
                     {toDoItems.map((item) => (
-                        <ToDoListItem 
+                        <ToDoListItem
+                            onTodoListToggleCompleted={toggleCompleted} 
                             onTodoListDelete={deleteTodoItem} 
                             key={item.id} 
                             item={item}

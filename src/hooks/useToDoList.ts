@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { KeyboardEvent, useState } from "react";
 import { ToDoListApp } from "../types/todolist-types";
 import { useStatuses } from "./service/useStatuses";
 import { delay } from "../utils/delay";
@@ -11,11 +11,16 @@ export const useToDoList = () =>   {
 
 
     const [toDoItems, setToDoItems] = useState<ToDoListApp['todolistitems']>([]);
+    const toggleCompleted = (id: string | number) => {
+        setToDoItems(toDoItems.map(item => item.id === id ? {...item, completed: !item.completed} : item))
+    }
     const addToDoItem = async () => {
+        if(inputValue === '') return
+
         try {
             setLoading()
 
-            await delay(1000)
+            await delay(500)
             setToDoItems([
                 ...toDoItems, {
                 id: crypto.randomUUID(),
@@ -30,20 +35,32 @@ export const useToDoList = () =>   {
             setError()
         }
         finally {
-             await delay(1000)
+             await delay(500)
             resetStatuses()
         }
     }
 
+    const addTodoItemByEnter = (e: KeyboardEvent) => {
+        
+        if(e.key === 'Enter') {
+            addToDoItem()
+        }
+    }
 
-    const deleteTodoItem = (id: string | number) => {
 
+    const deleteTodoItem = async (id: string | number) => {
+
+     
         setToDoItems(toDoItems.filter(item => item.id !== id))
+       
+       
     }
     return {
         inputValue,
         deleteTodoItem,
         setInputValue,
+        addTodoItemByEnter,
+        toggleCompleted,
         statuses,
         toDoItems,
         addToDoItem

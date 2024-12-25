@@ -15,10 +15,11 @@ export const useStatuses = () => {
 
     const setLoading = () => setStatus(TodoListCreateStatuses.LOADING)
     const setSuccess = () => setStatus(TodoListCreateStatuses.SUCCESS)
-    const setError = () => setStatus(TodoListCreateStatuses.ERROR) 
+    const setError = () => setStatus(TodoListCreateStatuses.ERROR)
+    const setDeleting = () => setStatus(TodoListCreateStatuses.DELETING) 
     
     
     const resetStatuses = () => setStatus(TodoListCreateStatuses.IDLE)
 
-    return {statuses, setLoading, setSuccess, setError, resetStatuses}
+    return {statuses, setLoading, setDeleting, setSuccess, setError, resetStatuses}
 }

@@ -4,9 +4,9 @@ import { ToDoList } from "./components/ToDoList"
 function App() {
 
   return (
-    <>
-     <ToDoList bgColor="white" />
-    </>
+  
+    <ToDoList bgColor="ghostwhite" />
+    
   )
 }
 
