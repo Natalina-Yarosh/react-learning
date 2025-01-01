@@ -4,7 +4,13 @@ type TextProps = {
   tag?: "div" | "p" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   children: ReactNode;
   className?: string;
-  onClick?: MouseEventHandler<HTMLDivElement | HTMLSpanElement | HTMLParagraphElement | HTMLHeadingElement | HTMLAnchorElement>;
+  onClick?: MouseEventHandler<
+    | HTMLDivElement
+    | HTMLSpanElement
+    | HTMLParagraphElement
+    | HTMLHeadingElement
+    | HTMLAnchorElement
+  >;
 };
 /**
  * A simple component that wraps its children in a HTML element with the given tag.
@@ -14,6 +20,9 @@ type TextProps = {
  */
 export const Text: FC<TextProps> = ({ tag, children, className, onClick }) => {
   const Component = tag || "div";
-  return <Component className={className} onClick={onClick}>{children}</Component>;
+  return (
+    <Component className={className} onClick={onClick}>
+      {children}
+    </Component>
+  );
 };
-
