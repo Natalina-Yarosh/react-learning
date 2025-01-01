@@ -24,6 +24,17 @@ export const ToDoList: FC<ToDoListProps> = ({ bgColor }) => {
         addToDoItem, 
         deleteTodoItem 
     } = useToDoList()
+
+    const TodoListOutPut = toDoItems.length ? toDoItems.map((item) => (
+        <ToDoListItem
+            saveEditValues={saveEditValues}
+            toggleEditMode={toggleEditMode}
+            onTodoListToggleCompleted={toggleCompleted} 
+            onTodoListDelete={deleteTodoItem} 
+            key={item.id} 
+            item={item}
+        />
+    )): <Text tag="h2">No notes yet</Text>
     
     return (
         <div  style={{ backgroundColor: bgColor }} className="wrapper">
@@ -46,16 +57,7 @@ export const ToDoList: FC<ToDoListProps> = ({ bgColor }) => {
                     
                 </div>
                 <ul className="list" >
-                    {toDoItems.length ? toDoItems.map((item) => (
-                        <ToDoListItem
-                            saveEditValues={saveEditValues}
-                            toggleEditMode={toggleEditMode}
-                            onTodoListToggleCompleted={toggleCompleted} 
-                            onTodoListDelete={deleteTodoItem} 
-                            key={item.id} 
-                            item={item}
-                        />
-                    )): <Text tag="h2">No notes yet</Text>}
+                    {TodoListOutPut}
                 </ul>
             </div> 
         </div>
